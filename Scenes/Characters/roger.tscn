@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://biwjf3eyxk2vk"]
+[gd_scene load_steps=48 format=3 uid="uid://biwjf3eyxk2vk"]
 
 [ext_resource type="Texture2D" uid="uid://iqhvda3myilw" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose without Sword/01-Idle/Idle 01.png" id="1_fu3rk"]
 [ext_resource type="Script" path="res://Scripts/character.gd" id="1_w0nuq"]
@@ -126,6 +126,96 @@ _data = {
 "run": SubResource("Animation_bir2y")
 }
 
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0vhrp"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o80s3"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jwtp2"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fndhm"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1vdbf"]
+advance_mode = 2
+advance_expression = "velocity.x != 0"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q1d2j"]
+advance_mode = 2
+advance_expression = "velocity.x == 0"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_i5bvo"]
+states/idle/node = SubResource("AnimationNodeAnimation_o80s3")
+states/idle/position = Vector2(396, 100)
+states/run/node = SubResource("AnimationNodeAnimation_jwtp2")
+states/run/position = Vector2(510, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_fndhm"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_1vdbf"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_q1d2j")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p3mjt"]
+animation = &"fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h6j4q"]
+animation = &"ground"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y20jg"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wtuu1"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pbf1g"]
+priority = 0
+advance_mode = 2
+advance_expression = "velocity.y < 0"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oyym7"]
+advance_mode = 2
+advance_expression = "velocity.y >= 0"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y7iwf"]
+advance_mode = 2
+advance_expression = "is_on_floor()"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vmyjq"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ll3qo"]
+advance_mode = 2
+advance_expression = "not is_on_floor()"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_12ted"]
+states/Locomotion/node = SubResource("AnimationNodeStateMachine_i5bvo")
+states/Locomotion/position = Vector2(413, 100)
+states/fall/node = SubResource("AnimationNodeAnimation_p3mjt")
+states/fall/position = Vector2(765, 100)
+states/ground/node = SubResource("AnimationNodeAnimation_h6j4q")
+states/ground/position = Vector2(608, 227)
+states/jump/node = SubResource("AnimationNodeAnimation_y20jg")
+states/jump/position = Vector2(608, -25)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_wtuu1"), "Locomotion", "jump", SubResource("AnimationNodeStateMachineTransition_pbf1g"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_oyym7"), "fall", "ground", SubResource("AnimationNodeStateMachineTransition_y7iwf"), "ground", "Locomotion", SubResource("AnimationNodeStateMachineTransition_vmyjq"), "Locomotion", "fall", SubResource("AnimationNodeStateMachineTransition_ll3qo")]
+graph_offset = Vector2(-36, -61)
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8b17s"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_02rlh"]
+states/Movement/node = SubResource("AnimationNodeStateMachine_12ted")
+states/Movement/position = Vector2(455, 100)
+transitions = ["Start", "Movement", SubResource("AnimationNodeStateMachineTransition_8b17s")]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gytqn"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_pwj0i"]
+states/Start/position = Vector2(172, 151)
+"states/With Sword/node" = SubResource("AnimationNodeStateMachine_0vhrp")
+"states/With Sword/position" = Vector2(581, 221)
+"states/Without Sword/node" = SubResource("AnimationNodeStateMachine_02rlh")
+"states/Without Sword/position" = Vector2(406, 151)
+transitions = ["Start", "Without Sword", SubResource("AnimationNodeStateMachineTransition_gytqn")]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sr0vt"]
 radius = 7.0
 height = 24.86
@@ -142,6 +232,12 @@ root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_voj0m")
 }
+
+[node name="AnimationTree" type="AnimationTree" parent="Sprite2D/AnimationPlayer"]
+root_node = NodePath("../../..")
+tree_root = SubResource("AnimationNodeStateMachine_pwj0i")
+advance_expression_base_node = NodePath("../../..")
+anim_player = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12.32)

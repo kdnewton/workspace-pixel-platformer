@@ -25,7 +25,11 @@ texture = ExtResource("1_ld4pc")
 shape = SubResource("RectangleShape2D_oyai2")
 
 [node name="Roger" parent="." instance=ExtResource("2_wy11o")]
-position = Vector2(261, 124)
+position = Vector2(583, 539)
 
 [node name="Player" type="Node" parent="Roger"]
 script = ExtResource("3_kwqkr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 514)
+zoom = Vector2(3, 3)
