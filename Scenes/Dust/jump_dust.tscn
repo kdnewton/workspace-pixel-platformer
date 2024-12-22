@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://hpgj4u5ewvly"]
+
+[ext_resource type="Texture2D" uid="uid://cjc3m8furerlt" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Dust Particles/Jump 01.png" id="1_dlupm"]
+[ext_resource type="Texture2D" uid="uid://cpuagdw1ynaja" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Dust Particles/Jump 02.png" id="2_q002k"]
+[ext_resource type="Texture2D" uid="uid://cvhyuxso863bo" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Dust Particles/Jump 03.png" id="3_ad847"]
+[ext_resource type="Texture2D" uid="uid://vel6fr88nc8e" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Dust Particles/Jump 04.png" id="4_vgyt5"]
+[ext_resource type="Texture2D" uid="uid://dsop1oqdinmuj" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Dust Particles/Jump 05.png" id="5_ri7vi"]
+[ext_resource type="Texture2D" uid="uid://dfmgvnos1wgns" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Dust Particles/Jump 06.png" id="6_b0ro4"]
+[ext_resource type="Script" path="res://Scripts/dust.gd" id="6_j3naq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jmpso"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dlupm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_q002k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ad847")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vgyt5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ri7vi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_b0ro4")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Dust Particles" type="AnimatedSprite2D"]
+scale = Vector2(0.585, 0.585)
+sprite_frames = SubResource("SpriteFrames_jmpso")
+frame = 5
+frame_progress = 1.0
+offset = Vector2(0, -10.17)
+script = ExtResource("6_j3naq")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
