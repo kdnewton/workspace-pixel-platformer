@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dm54pu5l0ajpv"]
+[gd_scene load_steps=12 format=3 uid="uid://dm54pu5l0ajpv"]
 
 [ext_resource type="Texture2D" uid="uid://dv270nntfyhjk" path="res://icon.svg" id="1_ld4pc"]
 [ext_resource type="PackedScene" uid="uid://biwjf3eyxk2vk" path="res://Scenes/Characters/roger.tscn" id="2_wy11o"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="3_kwqkr"]
+[ext_resource type="Script" path="res://Scripts/camera.gd" id="4_gva8t"]
 [ext_resource type="Texture2D" uid="uid://dutfahaaoqsgi" path="res://Treasure Hunters/Palm Tree Island/Sprites/Terrain/Terrain (32x32).png" id="4_i6y34"]
 [ext_resource type="Texture2D" uid="uid://bbna8co3eryx4" path="res://Treasure Hunters/Palm Tree Island/Sprites/Front Palm Trees/Front Palm Bottom and Grass (32x32).png" id="5_iknpn"]
 [ext_resource type="PackedScene" uid="uid://ctqokn5dd78mx" path="res://Scenes/Decorations/palm_tree.tscn" id="6_17y0x"]
@@ -435,9 +436,12 @@ position = Vector2(608, 512)
 [node name="Player" type="Node" parent="Roger"]
 script = ExtResource("3_kwqkr")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("_subject")]
 position = Vector2(575, 514)
 zoom = Vector2(3, 3)
+script = ExtResource("4_gva8t")
+_subject = NodePath("../Roger")
+_offset = Vector2(2, -1)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_syfvo")
@@ -446,7 +450,7 @@ layer_0/name = "Terrain"
 layer_0/tile_data = PackedInt32Array(1114130, 0, 4, 1114131, 65536, 4, 1114132, 1048576, 4, 917517, 262144, 0, 917519, 262144, 4, 983053, 262144, 2, 1048596, 262144, 0, 1048590, 0, 4, 1048591, 1048576, 3, 1114127, 262144, 2, 983054, 65537, 2, 983055, 131073, 2, 1048594, 65537, 2, 1048595, 131073, 2, 983060, 131073, 2, 851983, 131073, 2)
 layer_1/name = "Roots"
 layer_1/z_index = 1
-layer_1/tile_data = PackedInt32Array(1114132, 65537, 1, 1114133, 131073, 1, 917520, 131073, 1, 917516, 1, 2, 1114129, 65537, 0, 1114130, 131073, 0)
+layer_1/tile_data = PackedInt32Array(1114132, 65537, 1, 1114133, 131073, 1, 917520, 131073, 1, 917516, 1, 2, 1114129, 65537, 0, 1114130, 131073, 0, 983060, 1, 0, 1048596, 1, 1)
 
 [node name="Palm Tree" parent="." instance=ExtResource("6_17y0x")]
 position = Vector2(544, 512)
@@ -456,3 +460,9 @@ position = Vector2(672, 512)
 
 [node name="Palm Tree3" parent="." instance=ExtResource("6_17y0x")]
 position = Vector2(512, 416)
+
+[node name="Palm Tree4" parent="." instance=ExtResource("6_17y0x")]
+position = Vector2(640, 448)
+
+[connection signal="changed_direction" from="Roger" to="Camera2D" method="_on_subject_changed_direction"]
+[connection signal="landed" from="Roger" to="Camera2D" method="_on_subject_landed"]
