@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dm54pu5l0ajpv"]
+[gd_scene load_steps=14 format=3 uid="uid://dm54pu5l0ajpv"]
 
 [ext_resource type="Texture2D" uid="uid://dv270nntfyhjk" path="res://icon.svg" id="1_ld4pc"]
 [ext_resource type="PackedScene" uid="uid://biwjf3eyxk2vk" path="res://Scenes/Characters/roger.tscn" id="2_wy11o"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dutfahaaoqsgi" path="res://Treasure Hunters/Palm Tree Island/Sprites/Terrain/Terrain (32x32).png" id="4_i6y34"]
 [ext_resource type="Texture2D" uid="uid://bbna8co3eryx4" path="res://Treasure Hunters/Palm Tree Island/Sprites/Front Palm Trees/Front Palm Bottom and Grass (32x32).png" id="5_iknpn"]
 [ext_resource type="PackedScene" uid="uid://ctqokn5dd78mx" path="res://Scenes/Decorations/palm_tree.tscn" id="6_17y0x"]
+[ext_resource type="PackedScene" uid="uid://00vtiiplwelk" path="res://Scenes/Characters/crabby.tscn" id="8_v6ivq"]
+[ext_resource type="Script" path="res://Scenes/npc_controller.gd" id="9_i5a88"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyai2"]
 size = Vector2(126, 126)
@@ -421,7 +423,7 @@ offset_bottom = 23.0
 text = "Hello world!"
 
 [node name="Floor" type="Sprite2D" parent="."]
-position = Vector2(578.25, 649)
+position = Vector2(578.25, 653)
 scale = Vector2(8.90234, 0.679687)
 texture = ExtResource("1_ld4pc")
 
@@ -431,7 +433,7 @@ texture = ExtResource("1_ld4pc")
 shape = SubResource("RectangleShape2D_oyai2")
 
 [node name="Roger" parent="." instance=ExtResource("2_wy11o")]
-position = Vector2(608, 512)
+position = Vector2(608, 480)
 
 [node name="Player" type="Node" parent="Roger"]
 script = ExtResource("3_kwqkr")
@@ -442,27 +444,31 @@ zoom = Vector2(3, 3)
 script = ExtResource("4_gva8t")
 _subject = NodePath("../Roger")
 _offset = Vector2(2, -1)
+_look_ahead_trans_type = 1
+_floor_height_ease_type = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_syfvo")
 format = 2
 layer_0/name = "Terrain"
-layer_0/tile_data = PackedInt32Array(1114130, 0, 4, 1114131, 65536, 4, 1114132, 1048576, 4, 917517, 262144, 0, 917519, 262144, 4, 983053, 262144, 2, 1048596, 262144, 0, 1048590, 0, 4, 1048591, 1048576, 3, 1114127, 262144, 2, 983054, 65537, 2, 983055, 131073, 2, 1048594, 65537, 2, 1048595, 131073, 2, 983060, 131073, 2, 851983, 131073, 2)
+layer_0/tile_data = PackedInt32Array(917519, 262144, 4, 1048596, 65536, 4, 1048590, 65536, 4, 1048591, 65536, 4, 983054, 65537, 2, 983055, 131073, 2, 1048594, 65536, 4, 1048595, 65536, 4, 983060, 131073, 2, 851983, 131073, 2, 1179659, 458752, 4, 1245195, 393216, 1, 1245208, 458752, 1, 1179672, 0, 1, 1114136, 393216, 4, 1310731, 65536, 2, 1310732, 65536, 2, 1310733, 65536, 2, 1310734, 65536, 2, 1310735, 65536, 2, 1310736, 65536, 2, 1310737, 65536, 2, 1310738, 65536, 2, 1310744, 65536, 2, 1310743, 65536, 2, 1310742, 65536, 2, 1310741, 65536, 2, 1310740, 65536, 2, 1310739, 65536, 2, 1114123, 262144, 1, 1245196, 65536, 0, 1245197, 65536, 0, 1245198, 65536, 0, 1245199, 65536, 0, 1245200, 65536, 0, 1245201, 65536, 0, 1245202, 65536, 0, 1245203, 65536, 0, 1245204, 65536, 0, 1245205, 65536, 0, 1245206, 65536, 0, 1245207, 65536, 0, 1048587, 786432, 3, 1048588, 65536, 4, 1048589, 65536, 4, 1048592, 65536, 4, 1048593, 65536, 4, 1048597, 65536, 4, 1048598, 65536, 4, 1048599, 65536, 4, 1048600, 851968, 4, 1179673, 393216, 1, 1114137, 131072, 0, 1179674, 131072, 0, 1310745, 65536, 2, 1310746, 65536, 2, 1245210, 393216, 1, 1245209, 65536, 1, 983051, 262144, 0, 983064, 262144, 0, 1310730, 65536, 2, 1245194, 65536, 1, 1245193, 65536, 1, 1245192, 458752, 1, 1245191, 0, 0, 1310727, 655360, 4, 1310726, 0, 4, 1310728, 65536, 2, 1310729, 65536, 2, 1179658, 65536, 0, 1245211, 65536, 0, 1245212, 65536, 0, 1245213, 65536, 0, 1245214, 65536, 0, 1245215, 65536, 0, 1245216, 131072, 0, 1310752, 131072, 2, 1310751, 65536, 2, 1310750, 65536, 2, 1310749, 65536, 2, 1310748, 65536, 2, 1310747, 65536, 2, 1179656, 0, 0, 1179657, 589824, 0, 1114121, 262144, 0)
 layer_1/name = "Roots"
 layer_1/z_index = 1
-layer_1/tile_data = PackedInt32Array(1114132, 65537, 1, 1114133, 131073, 1, 917520, 131073, 1, 917516, 1, 2, 1114129, 65537, 0, 1114130, 131073, 0, 983060, 1, 0, 1048596, 1, 1)
-
-[node name="Palm Tree" parent="." instance=ExtResource("6_17y0x")]
-position = Vector2(544, 512)
-
-[node name="Palm Tree2" parent="." instance=ExtResource("6_17y0x")]
-position = Vector2(672, 512)
+layer_1/tile_data = PackedInt32Array(917520, 131073, 1, 983060, 1, 0, 1048596, 1, 1, 1114122, 65537, 0, 1114123, 131073, 0)
 
 [node name="Palm Tree3" parent="." instance=ExtResource("6_17y0x")]
 position = Vector2(512, 416)
 
 [node name="Palm Tree4" parent="." instance=ExtResource("6_17y0x")]
 position = Vector2(640, 448)
+
+[node name="CrustyCrew" type="Node" parent="."]
+
+[node name="Crabby" parent="CrustyCrew" instance=ExtResource("8_v6ivq")]
+position = Vector2(544, 576)
+
+[node name="NPCController" type="Node" parent="CrustyCrew/Crabby"]
+script = ExtResource("9_i5a88")
 
 [connection signal="changed_direction" from="Roger" to="Camera2D" method="_on_subject_changed_direction"]
 [connection signal="landed" from="Roger" to="Camera2D" method="_on_subject_landed"]
