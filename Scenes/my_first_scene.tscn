@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dm54pu5l0ajpv"]
+[gd_scene load_steps=15 format=3 uid="uid://dm54pu5l0ajpv"]
 
 [ext_resource type="Texture2D" uid="uid://dv270nntfyhjk" path="res://icon.svg" id="1_ld4pc"]
 [ext_resource type="PackedScene" uid="uid://biwjf3eyxk2vk" path="res://Scenes/Characters/roger.tscn" id="2_wy11o"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="3_kwqkr"]
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="4_gva8t"]
 [ext_resource type="Texture2D" uid="uid://dutfahaaoqsgi" path="res://Treasure Hunters/Palm Tree Island/Sprites/Terrain/Terrain (32x32).png" id="4_i6y34"]
+[ext_resource type="PackedScene" uid="uid://bytbfh751xgl0" path="res://Scenes/background.tscn" id="5_8xusr"]
 [ext_resource type="Texture2D" uid="uid://bbna8co3eryx4" path="res://Treasure Hunters/Palm Tree Island/Sprites/Front Palm Trees/Front Palm Bottom and Grass (32x32).png" id="5_iknpn"]
 [ext_resource type="PackedScene" uid="uid://ctqokn5dd78mx" path="res://Scenes/Decorations/palm_tree.tscn" id="6_17y0x"]
 [ext_resource type="PackedScene" uid="uid://00vtiiplwelk" path="res://Scenes/Characters/crabby.tscn" id="8_v6ivq"]
@@ -446,6 +447,8 @@ _subject = NodePath("../Roger")
 _offset = Vector2(2, -1)
 _look_ahead_trans_type = 1
 _floor_height_ease_type = 1
+
+[node name="Background" parent="Camera2D" instance=ExtResource("5_8xusr")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_syfvo")

@@ -21,6 +21,8 @@ Global="*res://Scripts/Autoloads/global.gd"
 
 [display]
 
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 
 [input]
