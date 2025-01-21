@@ -1,6 +1,5 @@
-[gd_scene load_steps=15 format=3 uid="uid://dm54pu5l0ajpv"]
+[gd_scene load_steps=23 format=3 uid="uid://dm54pu5l0ajpv"]
 
-[ext_resource type="Texture2D" uid="uid://dv270nntfyhjk" path="res://icon.svg" id="1_ld4pc"]
 [ext_resource type="PackedScene" uid="uid://biwjf3eyxk2vk" path="res://Scenes/Characters/roger.tscn" id="2_wy11o"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="3_kwqkr"]
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="4_gva8t"]
@@ -10,9 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://ctqokn5dd78mx" path="res://Scenes/Decorations/palm_tree.tscn" id="6_17y0x"]
 [ext_resource type="PackedScene" uid="uid://00vtiiplwelk" path="res://Scenes/Characters/crabby.tscn" id="8_v6ivq"]
 [ext_resource type="Script" path="res://Scenes/npc_controller.gd" id="9_i5a88"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyai2"]
-size = Vector2(126, 126)
+[ext_resource type="Texture2D" uid="uid://5x44l23whkfv" path="res://Treasure Hunters/Merchant Ship/Sprites/Water/Water/Top/1.png" id="11_711l2"]
+[ext_resource type="Script" path="res://Scripts/water.gd" id="11_eexw6"]
+[ext_resource type="PackedScene" uid="uid://chqcmcuiadgv0" path="res://Scenes/Dust/water_splash.tscn" id="12_8yfqp"]
+[ext_resource type="Texture2D" uid="uid://b6xjpbyh1qdmq" path="res://Treasure Hunters/Merchant Ship/Sprites/Water/Water/Top/2.png" id="12_r8rek"]
+[ext_resource type="Texture2D" uid="uid://dgkdhcot642l0" path="res://Treasure Hunters/Merchant Ship/Sprites/Water/Water/Top/3.png" id="13_ngwhv"]
+[ext_resource type="Texture2D" uid="uid://q8osrbgpmrtb" path="res://Treasure Hunters/Merchant Ship/Sprites/Water/Water/Top/4.png" id="14_xd0c1"]
+[ext_resource type="Texture2D" uid="uid://7oaq3f327exp" path="res://Treasure Hunters/Merchant Ship/Sprites/Water/Water/Bottom/1.png" id="15_abhgs"]
+[ext_resource type="AudioStream" uid="uid://bdebqf20vjt6g" path="res://Audio/406087__yin_yang_jake007__water-splash.wav" id="17_edhuc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y2y3w"]
 texture = ExtResource("4_i6y34")
@@ -416,22 +420,36 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_y2y3w")
 sources/1 = SubResource("TileSetAtlasSource_armog")
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_bc8mb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_711l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_r8rek")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ngwhv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xd0c1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pfsqv"]
+b = Vector2(1728, 0)
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Hello world!"
-
-[node name="Floor" type="Sprite2D" parent="."]
-position = Vector2(578.25, 653)
-scale = Vector2(8.90234, 0.679687)
-texture = ExtResource("1_ld4pc")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Floor"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-shape = SubResource("RectangleShape2D_oyai2")
+metadata/_edit_use_anchors_ = true
 
 [node name="Roger" parent="." instance=ExtResource("2_wy11o")]
 position = Vector2(608, 480)
@@ -473,5 +491,159 @@ position = Vector2(544, 576)
 [node name="NPCController" type="Node" parent="CrustyCrew/Crabby"]
 script = ExtResource("9_i5a88")
 
+[node name="WaterArea" type="Area2D" parent="."]
+z_index = 9
+position = Vector2(-96, 640)
+script = ExtResource("11_eexw6")
+_splash = ExtResource("12_8yfqp")
+
+[node name="Node2D" type="Node2D" parent="WaterArea"]
+position = Vector2(-192, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D2" type="Node2D" parent="WaterArea"]
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D2"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D2"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D3" type="Node2D" parent="WaterArea"]
+position = Vector2(192, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D3"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D3"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D4" type="Node2D" parent="WaterArea"]
+position = Vector2(384, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D4"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D4"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D5" type="Node2D" parent="WaterArea"]
+position = Vector2(576, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D5"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D5"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D6" type="Node2D" parent="WaterArea"]
+position = Vector2(768, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D6"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D6"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D7" type="Node2D" parent="WaterArea"]
+position = Vector2(960, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D7"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D7"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D8" type="Node2D" parent="WaterArea"]
+position = Vector2(1152, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D8"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D8"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="Node2D9" type="Node2D" parent="WaterArea"]
+position = Vector2(1344, 0)
+
+[node name="WaterSurface" type="AnimatedSprite2D" parent="WaterArea/Node2D9"]
+position = Vector2(48, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.2937
+
+[node name="WaterSurface2" type="AnimatedSprite2D" parent="WaterArea/Node2D9"]
+position = Vector2(144, 8)
+sprite_frames = SubResource("SpriteFrames_bc8mb")
+autoplay = "default"
+frame_progress = 0.672798
+
+[node name="WaterBody" type="Sprite2D" parent="WaterArea"]
+position = Vector2(672, 124)
+scale = Vector2(18, 6.25)
+texture = ExtResource("15_abhgs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea"]
+position = Vector2(-192, 0)
+shape = SubResource("SegmentShape2D_pfsqv")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="WaterArea"]
+stream = ExtResource("17_edhuc")
+
 [connection signal="changed_direction" from="Roger" to="Camera2D" method="_on_subject_changed_direction"]
 [connection signal="landed" from="Roger" to="Camera2D" method="_on_subject_landed"]
+[connection signal="body_entered" from="WaterArea" to="WaterArea" method="_on_body_entered"]
+[connection signal="body_exited" from="WaterArea" to="WaterArea" method="_on_body_exited"]
